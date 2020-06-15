@@ -1,0 +1,118 @@
+
+
+set tabstop=2
+set shiftwidth=2
+set noexpandtab
+set number
+
+let fortran_free_source=1
+let fortran_have_tabs=1
+let fortran_more_precise=1
+let fortran_do_enddo=1
+filetype plugin on
+
+"NeoBundle
+if 0 | endif
+
+if &compatible
+  set nocompatible               " Be iMproved
+endif
+
+" Required:
+set runtimepath+=~/.vim/bundle/repos/github.com/Shougo/dein.vim
+
+" " Required:
+" call neobundle#begin(expand('~/.vim/bundle/'))
+" " PLUGINS
+" " NERD tree
+" NeoBundle 'scrooloose/nerdtree'
+" " Syntastic
+" NeoBundle 'scrooloose/syntastic'
+" " Color schemes
+" NeoBundle 'rafi/awesome-vim-colorschemes'
+" " Rainbow Parentheses
+" NeoBundle 'kien/rainbow_parentheses.vim'
+" " Lightline
+" NeoBundle 'itchyny/lightline.vim'
+" " NERDcommenter
+" NeoBundle 'preservim/nerdcommenter'
+" "Let NeoBundle manage NeoBundle
+" " Required:
+" NeoBundleFetch 'Shougo/neobundle.vim'
+" call neobundle#end()
+if dein#load_state('~/vim/bundle')
+  call dein#begin('~/vim/bundle')
+
+  call dein#add('~/vim/bundle/repos/github.com/Shougo/dein.vim')
+  call dein#add('Shougo/deoplete.nvim')
+  if !has('nvim')
+    call dein#add('roxma/nvim-yarp')
+    call dein#add('roxma/vim-hug-neovim-rpc')
+  endif
+  " NERD tree
+  call dein#add('scrooloose/nerdtree')
+  " Syntastic
+  call dein#add('scrooloose/syntastic')
+  " Color schemes
+  call dein#add('rafi/awesome-vim-colorschemes')
+  " Rainbow Parentheses
+  call dein#add('kien/rainbow_parentheses.vim')
+  " Lightline
+  call dein#add('itchyny/lightline.vim')
+  " NERDcommenter
+  call dein#add('preservim/nerdcommenter')
+
+  call dein#end()
+  call dein#save_state()
+endif
+
+
+" Required:
+filetype plugin indent on
+syntax enable
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+"NeoBundleCheck
+
+
+"Syntastic options
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_fortran_compiler = 'gfortran'
+let g:syntastic_fortran_include_dirs = ["../include"]
+let g:syntastic_fortran_compiler_options = '-fsyntax-only -w -I../include' 
+" Lightline
+set laststatus=2
+let g:lightline = {
+      \ 'colorscheme': 'jellybeans',
+      \ }
+set noshowmode
+" ColorScheme
+colorscheme molokayo
+syntax on
+" Mapping NERDTreeFocus
+map <F3> :NERDTreeFocus<CR>
+"Parentheses
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+" Mapping Buffers: explore, previous, next
+nnoremap <silent> <F12> :buffers<CR>
+nnoremap <silent> <F5> :bprevious<CR>
+nnoremap <silent> <F6> :bnext<CR>
+" NERDCommenter
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
